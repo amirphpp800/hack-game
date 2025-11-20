@@ -382,7 +382,7 @@ export class GamePage {
     </div>
 </body>
 </html>
-            `).trim();
+</span>`.trim()
         }
 
         if (fileContents[args[0]]) {
