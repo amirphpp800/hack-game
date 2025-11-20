@@ -727,9 +727,9 @@ msf6 > <span class="warning">Use 'explorer' tab for visual exploit interface</sp
             return;
         }
 
-        this.terminal.print(`<span class="info">Loaded 1 password hash (MD5)</span>`);
-        this.terminal.print(`<span class="info">Will run 4 OpenMP threads</span>`);
-        this.terminal.print(`<span class="info">Proceeding with wordlist attack...</span>`);
+        this.terminal.print('<span class="info">Loaded 1 password hash (MD5)</span>');
+        this.terminal.print('<span class="info">Will run 4 OpenMP threads</span>');
+        this.terminal.print('<span class="info">Proceeding with wordlist attack...</span>');
 
         setTimeout(() => {
             this.terminal.print('<span class="success">[+] password123 (hash)</span>');
@@ -743,16 +743,12 @@ msf6 > <span class="warning">Use 'explorer' tab for visual exploit interface</sp
             return;
         }
 
-        this.terminal.print(`
-<span style="color: #2CF6F6;">hashcat (v6.2.6) starting...</span>
-
-[*] Hash-Mode: 0 (MD5)
-[*] Optimizers: enabled
-[*] Wordlist: rockyou.txt
-
-[*] GPU #1: NVIDIA RTX 4090, 24576 MB available
-[*] Speed: 45.2 GH/s
-        `);
+        this.terminal.print('<span style="color: #2CF6F6;">hashcat (v6.2.6) starting...</span>');
+        this.terminal.print('[*] Hash-Mode: 0 (MD5)');
+        this.terminal.print('[*] Optimizers: enabled');
+        this.terminal.print('[*] Wordlist: rockyou.txt');
+        this.terminal.print('[*] GPU #1: NVIDIA RTX 4090, 24576 MB available');
+        this.terminal.print('[*] Speed: 45.2 GH/s');
 
         setTimeout(() => {
             this.terminal.print('<span class="success">[+] Hash cracked successfully</span>');
