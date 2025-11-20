@@ -19,11 +19,11 @@ export class HUD {
                 </div>
                 <div><span class="info">IP:</span> <span id="hud-ip">${this.user.ip}</span></div>
                 <div><span class="info">Security:</span> <span id="hud-security">${this.user.securityLevel}%</span></div>
-                <div><span class="info">Balance:</span> <span id="hud-balance">₿${this.user.balance.toFixed(8)}</span></div>
+                <div><span class="info">Balance:</span> <span id="hud-balance">₿${this.user.balance}</span></div>
                 ${this.user.lockedBalance > 0 ? `
                 <div class="hud-locked">
                     <span class="info">Locked:</span> 
-                    <span id="hud-locked">₿${this.user.lockedBalance.toFixed(8)}</span>
+                    <span id="hud-locked">₿${this.user.lockedBalance}</span>
                 </div>
                 ` : ''}
                 <button class="logout-btn" id="logout-btn">خروج</button>
@@ -51,12 +51,12 @@ export class HUD {
 
         document.getElementById('hud-ip').textContent = user.ip;
         document.getElementById('hud-security').textContent = `${user.securityLevel}%`;
-        document.getElementById('hud-balance').textContent = `₿${user.balance.toFixed(8)}`;
+        document.getElementById('hud-balance').textContent = `₿${user.balance}`;
         
         const lockedElement = document.getElementById('hud-locked');
         if (user.lockedBalance > 0) {
             if (lockedElement) {
-                lockedElement.textContent = `₿${user.lockedBalance.toFixed(8)}`;
+                lockedElement.textContent = `₿${user.lockedBalance}`;
             }
         }
     }

@@ -33,7 +33,7 @@ export class AuthService {
         const newUser = {
             username,
             password: hashedPassword,
-            balance: 0.001,
+            balance: 0.005,
             lockedBalance: 0,
             ip: CryptoUtils.generateFakeIP(),
             rank: 'مبتدی',

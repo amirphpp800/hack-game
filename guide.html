@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای بازی - Cyber Breach</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0C0F17 0%, #0F1624 100%);
+            color: #E4E6EB;
+            line-height: 1.8;
+            padding: 20px;
+        }
+        
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #151A24;
+            border: 2px solid #B537F2;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 50px rgba(181, 55, 242, 0.3);
+        }
+        
+        .guide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #22314A;
+        }
+        
+        .guide-title {
+            font-size: 42px;
+            color: #2CF6F6;
+            text-shadow: 0 0 20px #2CF6F6;
+            margin-bottom: 10px;
+        }
+        
+        .guide-subtitle {
+            font-size: 18px;
+            color: #9EA5B3;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: #B537F2;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #22314A;
+        }
+        
+        .subsection-title {
+            font-size: 22px;
+            color: #2CF6F6;
+            margin: 25px 0 15px 0;
+        }
+        
+        .content {
+            color: #E4E6EB;
+            margin-bottom: 15px;
+        }
+        
+        .item-category {
+            background: #0F1624;
+            border: 2px solid #22314A;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .category-name {
+            font-size: 20px;
+            color: #00FF76;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .item-list {
+            list-style: none;
+            padding-right: 20px;
+        }
+        
+        .item-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #22314A;
+        }
+        
+        .item-name {
+            color: #2CF6F6;
+            font-weight: 600;
+        }
+        
+        .item-desc {
+            color: #9EA5B3;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .command-box {
+            background: #0A0E1A;
+            border: 1px solid #B537F2;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .command {
+            color: #00FF76;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: rgba(255, 46, 99, 0.1);
+            border: 2px solid #FF2E63;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-title {
+            color: #FF2E63;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .info-box {
+            background: rgba(44, 246, 246, 0.1);
+            border: 2px solid #2CF6F6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .info-title {
+            color: #2CF6F6;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .success-box {
+            background: rgba(0, 255, 118, 0.1);
+            border: 2px solid #00FF76;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            background: #B537F2;
+            color: #0B0B0D;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            box-shadow: 0 0 20px #B537F2;
+            transform: translateY(-2px);
+        }
+        
+        .rarity {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .rarity.common { background: #8F98A9; color: #0B0B0D; }
+        .rarity.uncommon { background: #45FF7A; color: #0B0B0D; }
+        .rarity.rare { background: #009DFF; color: #fff; }
+        .rarity.epic { background: #B537F2; color: #fff; }
+        .rarity.legendary { background: #FFCE3D; color: #0B0B0D; }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="guide-header">
+            <h1 class="guide-title">📚 راهنمای کامل بازی Cyber Breach</h1>
+            <p class="guide-subtitle">همه چیز درباره نحوه بازی، دستورات و آیتم‌ها</p>
+        </div>
+
+        <!-- مقدمه -->
+        <section class="section">
+            <h2 class="section-title">🎮 مقدمه</h2>
+            <div class="content">
+                <p>به دنیای Cyber Breach خوش آمدید! این بازی یک شبیه‌ساز شبکه است که در آن شما نقش یک هکر را بازی می‌کنید. هدف شما ارتقای مهارت‌ها، جمع‌آوری بیت‌کوین و غلبه بر سایر بازیکنان است.</p>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ هشدار مهم</div>
+                <p>این بازی کاملاً تخیلی است و هیچ فعالیت واقعی هکینگ در آن انجام نمی‌شود. تمام اطلاعات و حملات شبیه‌سازی شده است.</p>
+            </div>
+        </section>
+
+        <!-- شروع بازی -->
+        <section class="section">
+            <h2 class="section-title">🚀 شروع بازی</h2>
+            
+            <h3 class="subsection-title">ثبت نام و ورود</h3>
+            <div class="content">
+                <p>برای شروع بازی، ابتدا باید یک حساب کاربری بسازید:</p>
+                <ol style="padding-right: 20px;">
+                    <li>نام کاربری منحصر به فرد انتخاب کنید</li>
+                    <li>رمز عبور قوی تعیین کنید</li>
+                    <li>ایمیل معتبر وارد کنید</li>
+                    <li>می‌توانید فعلاً بدون تایید ایمیل وارد شوید و بعداً حساب را تایید کنید</li>
+                </ol>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-title">💰 موجودی اولیه</div>
+                <p>هر بازیکن با موجودی اولیه <strong>₿0.0050</strong> شروع می‌کند که می‌توانید با آن اولین خریدهای خود را انجام دهید.</p>
+            </div>
+        </section>
+
+        <!-- رابط کاربری -->
+        <section class="section">
+            <h2 class="section-title">🖥️ رابط کاربری (HUD)</h2>
+            <div class="content">
+                <p>در بالای صفحه اطلاعات مهم شما نمایش داده می‌شود:</p>
+                <ul style="padding-right: 20px;">
+                    <li><strong>نام کاربری:</strong> نام شما در بازی</li>
+                    <li><strong>IP Address:</strong> آدرس IP شبیه‌سازی شده شما</li>
+                    <li><strong>Security Level:</strong> سطح امنیت کلی سیستم شما</li>
+                    <li><strong>Balance:</strong> موجودی بیت‌کوین شما</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- بخش‌های بازی -->
+        <section class="section">
+            <h2 class="section-title">📂 بخش‌های مختلف بازی</h2>
+            
+            <h3 class="subsection-title">1️⃣ Terminal (ترمینال)</h3>
+            <div class="content">
+                <p>قلب اصلی بازی! اینجا می‌توانید دستورات مختلف را اجرا کنید:</p>
+            </div>
+            
+            <h3 class="subsection-title">2️⃣ Explorer (کاوشگر شبکه)</h3>
+            <div class="content">
+                <p>در این بخش می‌توانید شبکه را اسکن کنید و بازیکنان دیگر را پیدا کنید. سپس می‌توانید به آن‌ها حمله کنید یا IP آن‌ها را کپی کنید.</p>
+            </div>
+            
+            <h3 class="subsection-title">3️⃣ Profile (پروفایل)</h3>
+            <div class="content">
+                <p>اطلاعات کامل شما شامل آمار، امتیازها و وضعیت امنیتی در این بخش نمایش داده می‌شود.</p>
+            </div>
+            
+            <h3 class="subsection-title">4️⃣ Store (فروشگاه)</h3>
+            <div class="content">
+                <p>بازار تاریک وب! اینجا می‌توانید آیتم‌های مختلف را خریداری کنید تا قدرت خود را افزایش دهید.</p>
+            </div>
+            
+            <h3 class="subsection-title">5️⃣ Inventory (موجودی)</h3>
+            <div class="content">
+                <p>تمام آیتم‌هایی که خریداری کرده‌اید در این بخش نمایش داده می‌شوند.</p>
+            </div>
+        </section>
+
+        <!-- دستورات Terminal -->
+        <section class="section">
+            <h2 class="section-title">⌨️ دستورات ترمینال</h2>
+            
+            <h3 class="subsection-title">دستورات پایه</h3>
+            <div class="command-box">
+                <div><span class="command">help</span> - نمایش لیست تمام دستورات</div>
+                <div><span class="command">clear</span> - پاک کردن صفحه ترمینال</div>
+                <div><span class="command">ls</span> - نمایش فایل‌ها</div>
+                <div><span class="command">cat [file]</span> - خواندن محتوای فایل</div>
+                <div><span class="command">ifconfig</span> - نمایش اطلاعات شبکه</div>
+            </div>
+            
+            <h3 class="subsection-title">دستورات اطلاعاتی</h3>
+            <div class="command-box">
+                <div><span class="command">profile</span> - نمایش پروفایل شما</div>
+                <div><span class="command">balance</span> - نمایش موجودی بیت‌کوین</div>
+                <div><span class="command">inventory</span> - نمایش آیتم‌های شما</div>
+                <div><span class="command">status</span> - وضعیت سیستم</div>
+            </div>
+            
+            <h3 class="subsection-title">دستورات حمله</h3>
+            <div class="warning-box">
+                <div class="warning-title">⚠️ توجه: نحوه صحیح حمله</div>
+                <p>برای حمله موفق، باید دستورات را به ترتیب صحیح وارد کنید. هر اشتباه منجر به شکست و جریمه می‌شود!</p>
+            </div>
+            
+            <div class="command-box">
+                <div style="margin-bottom: 15px;"><strong>مرحله 1: اسکن هدف</strong></div>
+                <div><span class="command">nmap [IP]</span> - اسکن پورت‌های هدف</div>
+                <div style="color: #9EA5B3; margin: 10px 0;">↓ سپس منتظر بمانید تا اسکن تمام شود</div>
+                
+                <div style="margin: 20px 0;"><strong>مرحله 2: بررسی آسیب‌پذیری</strong></div>
+                <div><span class="command">nikto [IP]</span> - اسکن آسیب‌پذیری وب</div>
+                <div style="color: #9EA5B3; margin: 10px 0;">↓ نتایج را بررسی کنید</div>
+                
+                <div style="margin: 20px 0;"><strong>مرحله 3: حمله نهایی</strong></div>
+                <div><span class="command">exploit [IP]</span> - حمله با اکسپلویت</div>
+                <div style="color: #9EA5B3;">یا</div>
+                <div><span class="command">hydra [IP]</span> - حمله brute force</div>
+                <div style="color: #9EA5B3;">یا</div>
+                <div><span class="command">sqlmap [IP]</span> - حمله SQL injection</div>
+            </div>
+            
+            <div class="success-box">
+                <div class="info-title">✅ نکات مهم حمله</div>
+                <ul style="padding-right: 20px;">
+                    <li>حتماً ابتدا با nmap اسکن کنید</li>
+                    <li>سپس با nikto آسیب‌پذیری‌ها را شناسایی کنید</li>
+                    <li>در نهایت یکی از دستورات حمله را اجرا کنید</li>
+                    <li>اگر ترتیب را رعایت نکنید، حمله شکست می‌خورد و جریمه می‌شوید!</li>
+                    <li>هر اشتباه در وارد کردن دستور = جریمه ₿0.0005</li>
+                </ul>
+            </div>
+            
+            <h3 class="subsection-title">استفاده از آیتم‌ها</h3>
+            <div class="command-box">
+                <div><span class="command">use [item_name]</span> - استفاده از آیتم خریداری شده</div>
+                <div style="color: #9EA5B3; margin-top: 10px;">مثال: use VPN آمریکا</div>
+                <div style="color: #2CF6F6; margin-top: 5px;">پیش‌نمایش آیتم در ترمینال نمایش داده می‌شود</div>
+            </div>
+            
+            <h3 class="subsection-title">حمله خودکار (نیاز به خرید آیتم)</h3>
+            <div class="command-box">
+                <div><span class="command">autoattack [IP]</span> - حمله خودکار به هدف</div>
+                <div style="color: #9EA5B3; margin-top: 10px;">نیاز به خرید آیتم "حمله خودکار" از فروشگاه</div>
+            </div>
+        </section>
+
+        <!-- آیتم‌های فروشگاه -->
+        <section class="section">
+            <h2 class="section-title">🛒 راهنمای فروشگاه و آیتم‌ها</h2>
+            
+            <div class="info-box">
+                <div class="info-title">🌟 سطوح کمیابی (Rarity)</div>
+                <p>
+                    <span class="rarity common">معمولی</span>
+                    <span class="rarity uncommon">غیرمعمول</span>
+                    <span class="rarity rare">نادر</span>
+                    <span class="rarity epic">حماسی</span>
+                    <span class="rarity legendary">افسانه‌ای</span>
+                </p>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">🌐 VPN Locations (سرورهای VPN)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> افزایش Stealth (پنهان‌سازی) و امنیت شما. با استفاده از VPN هویت خود را مخفی کنید.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">VPN آمریکا <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.002 | Stealth +15 | سرور نیویورک با پینگ پایین</div>
+                    </li>
+                    <li>
+                        <div class="item-name">VPN ژاپن <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.003 | Stealth +20 | دسترسی به شبکه آسیا</div>
+                    </li>
+                    <li>
+                        <div class="item-name">VPN Multi-Hop <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.01 | Stealth +40, Defense +10 | اتصال از 5 کشور</div>
+                    </li>
+                    <li>
+                        <div class="item-name">VPN Onion Router <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.02 | Stealth +60, Defense +15 | ناشناسی کامل با Tor</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">💻 Hardware (سخت‌افزار)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> افزایش قدرت پردازش، موفقیت هک و قدرت حمله شما.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">پردازنده i7 <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.007 | Hack Success +12, Attack +5</div>
+                    </li>
+                    <li>
+                        <div class="item-name">GPU RTX 4090 <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.035 | Hack Success +40, Attack +25 | هش شکنی سریع</div>
+                    </li>
+                    <li>
+                        <div class="item-name">پردازنده کوانتومی <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.15 | Hack Success +80, Attack +50 | آینده هک</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">🛠️ Software & Tools (نرم‌افزار و ابزار)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> ابزارهای تخصصی برای هک و نفوذ به سیستم‌ها.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">Kali Linux <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.0012 | Hack Success +10, Attack +5 | سیستم عامل تست نفوذ</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Metasploit Pro <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.008 | Attack +20, Hack Success +15 | فریمورک اکسپلویت</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Custom AI Hacker <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.025 | Attack +35, Hack Success +30 | هوش مصنوعی هک</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Zero-Day Toolkit <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.12 | Attack +70, Hack Success +60 | اکسپلویت‌های روز صفر</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">📜 Scripts & Exploits (اسکریپت‌ها)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> اسکریپت‌های آماده برای حملات مختلف.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">DDoS Script <span class="rarity common">معمولی</span></div>
+                        <div class="item-desc">قیمت: ₿0.0015 | Attack +8 | حمله DDoS ساده</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Botnet Controller <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.009 | Attack +22, Hack Success +10 | کنترل شبکه بات</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Ransomware Kit <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.03 | Attack +40, Hack Success +20 | باج‌افزار حرفه‌ای</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">🛡️ Security & Defense (امنیت و دفاع)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> محافظت از سیستم شما در برابر حملات دیگران.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">فایروال پایه <span class="rarity common">معمولی</span></div>
+                        <div class="item-desc">قیمت: ₿0.0015 | Defense +8 | محافظت پایه</div>
+                    </li>
+                    <li>
+                        <div class="item-name">فایروال Enterprise <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.01 | Defense +35, Encryption +10 | سطح سازمانی</div>
+                    </li>
+                    <li>
+                        <div class="item-name">رمزگذار کوانتومی <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.1 | Encryption +80, Defense +40 | ضد کوانتوم</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">🥷 Stealth & Anonymity (پنهان‌سازی)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> مخفی ماندن و پاک کردن ردپا.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">زنجیره پراکسی <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.0032 | Stealth +18 | پراکسی چند لایه</div>
+                    </li>
+                    <li>
+                        <div class="item-name">Anti-Forensics Kit <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.015 | Stealth +45, Defense +15 | پاک‌سازی ردپا</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category">
+                <div class="category-name">🎨 Cosmetics (ظاهری)</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> آیتم‌های زیبایی و افزایش درآمد غیرفعال.</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">کیبورد مکانیکی RGB <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.0024 | Hack Success +5, Income +8</div>
+                    </li>
+                    <li>
+                        <div class="item-name">سه مانیتور Setup <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.016 | Hack Success +18, Income +35</div>
+                    </li>
+                    <li>
+                        <div class="item-name">اتاق Cyber Setup <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.07 | Hack Success +30, Income +80, Stealth +20</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="item-category" style="border: 2px solid #FFCE3D;">
+                <div class="category-name" style="color: #FFCE3D;">⚡ Auto Attack (حمله خودکار) - جدید!</div>
+                <p style="color: #9EA5B3; margin-bottom: 15px;"><strong>کاربرد:</strong> حمله خودکار بدون نیاز به وارد کردن دستورات پیچیده. فقط IP هدف را وارد کنید!</p>
+                <ul class="item-list">
+                    <li>
+                        <div class="item-name">AutoHack Basic <span class="rarity uncommon">غیرمعمول</span></div>
+                        <div class="item-desc">قیمت: ₿0.01 | حمله خودکار سطح پایه با 60% موفقیت</div>
+                    </li>
+                    <li>
+                        <div class="item-name">AutoHack Pro <span class="rarity rare">نادر</span></div>
+                        <div class="item-desc">قیمت: ₿0.025 | حمله خودکار پیشرفته با 75% موفقیت</div>
+                    </li>
+                    <li>
+                        <div class="item-name">AutoHack Elite <span class="rarity epic">حماسی</span></div>
+                        <div class="item-desc">قیمت: ₿0.05 | حمله خودکار حرفه‌ای با 85% موفقیت</div>
+                    </li>
+                    <li>
+                        <div class="item-name">AutoHack Quantum <span class="rarity legendary">افسانه‌ای</span></div>
+                        <div class="item-desc">قیمت: ₿0.1 | حمله خودکار کوانتومی با 95% موفقیت</div>
+                    </li>
+                </ul>
+                <div style="margin-top: 15px; padding: 10px; background: rgba(255, 206, 61, 0.1); border-radius: 5px;">
+                    <strong style="color: #FFCE3D;">نحوه استفاده:</strong><br>
+                    <code style="color: #00FF76;">autoattack [IP_Address]</code><br>
+                    <span style="color: #9EA5B3; font-size: 13px;">مثال: autoattack 192.168.1.50</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- نکات و ترفندها -->
+        <section class="section">
+            <h2 class="section-title">💡 نکات و ترفندها</h2>
+            
+            <div class="success-box">
+                <ul style="padding-right: 20px;">
+                    <li>ابتدا روی آیتم‌های دفاعی سرمایه‌گذاری کنید تا از حملات دیگران محافظت شوید</li>
+                    <li>VPN خوب بخرید تا شناسایی نشوید</li>
+                    <li>قبل از حمله، حتماً مراحل اسکن و بررسی را انجام دهید</li>
+                    <li>از دستورات پیشنهادی بعد از هر مرحله استفاده کنید</li>
+                    <li>با دقت تایپ کنید - هر اشتباه = جریمه!</li>
+                    <li>آیتم‌های Auto Attack برای سرعت بخشیدن به بازی عالی هستند</li>
+                    <li>هر روز وارد بازی شوید تا پاداش روزانه دریافت کنید</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- پایان -->
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="index.html" class="back-btn">🎮 بازگشت به بازی</a>
+        </div>
+    </div>
+</body>
+</html>

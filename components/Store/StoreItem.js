@@ -36,7 +36,11 @@ export class StoreItem {
             scripts: 'اسکریپت',
             stealth: 'مخفی‌کاری',
             security: 'امنیت',
-            cosmetics: 'تزئینی'
+            cosmetics: 'تزئینی',
+            vpn: 'VPN',
+            backdoor: 'بک‌دور',
+            antibackdoor: 'ضد بک‌دور',
+            autoattack: 'حمله خودکار'
         };
         return map[category] || category;
     }
@@ -59,6 +63,7 @@ export class StoreItem {
     render() {
         const effectsText = this.getEffectsHTML();
         const clickable = this.canAfford && !this.owned;
+        const levelBadge = this.item.level ? `<span class="item-level">سطح ${this.item.level}</span>` : '';
         
         return `
             <div class="store-item ${this.item.rarity} ${clickable ? '' : 'cant-afford'}" 
@@ -67,6 +72,7 @@ export class StoreItem {
                 <span class="item-rarity ${this.item.rarity}">
                     ${this.getRarityIcon(this.item.rarity)} ${this.getRarityPersian(this.item.rarity)}
                 </span>
+                ${levelBadge}
                 <div class="item-icon">${this.item.icon}</div>
                 <div class="item-name">${this.item.name}</div>
                 <div class="item-category">${this.getCategoryPersian(this.item.category)}</div>
