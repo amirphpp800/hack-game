@@ -111,8 +111,26 @@ body {
 }
 
 .auth-btn:hover {
-    background: rgba(181, 55, 242, 0.8);
-    box-shadow: 0 0 12px #B537F2;
+    background: #B537F2;
+    box-shadow: 0 0 20px #B537F2;
+}
+
+.auth-btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background: rgba(158, 165, 179, 0.2);
+    color: #9EA5B3;
+    border: 1px solid #9EA5B3;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: 'Vazirmatn', monospace;
+    transition: all 0.3s;
+}
+
+.auth-btn-secondary:hover {
+    background: rgba(158, 165, 179, 0.3);
+    box-shadow: 0 0 15px rgba(158, 165, 179, 0.3);
 }
 
 .auth-switch {

@@ -59,8 +59,12 @@ export class AuthPage {
             const { NotificationUtils } = await import('../utils/NotificationUtils.js');
             
             if (result.needsVerification) {
-                NotificationUtils.show('ثبت نام موفق! کد تایید به تلگرام ارسال شد', 'success');
-                this.showVerification(username);
+                if (result.telegramSent) {
+                    NotificationUtils.show('ثبت نام موفق! کد تایید به تلگرام ارسال شد', 'success');
+                } else {
+                    NotificationUtils.show('ثبت نام موفق! (کد تایید ارسال نشد)', 'warning');
+                }
+                this.showVerification(username, result.telegramSent);
             } else {
                 NotificationUtils.show('[+] Registration successful!', 'success');
                 setTimeout(() => {
@@ -74,18 +78,32 @@ export class AuthPage {
         }
     }
 
-    showVerification(username) {
+    showVerification(username, telegramSent = true) {
         const verifyHTML = `
             <div class="auth-form">
                 <h2>تایید حساب کاربری</h2>
-                <p style="color: #9EA5B3; margin-bottom: 20px;">کد تایید 6 رقمی به تلگرام شما ارسال شد</p>
+                <p style="color: #9EA5B3; margin-bottom: 20px;">
+                    ${telegramSent 
+                        ? 'کد تایید 6 رقمی به تلگرام شما ارسال شد' 
+                        : '⚠️ ارسال کد تایید با مشکل مواجه شد'}
+                </p>
                 <input type="text" id="verify-code" placeholder="کد تایید" maxlength="6" autocomplete="off">
                 <button id="verify-btn" class="auth-btn">تایید حساب</button>
+                <button id="verify-later-btn" class="auth-btn-secondary" style="margin-top: 10px;">تایید بعداً و ورود</button>
                 <a href="#" id="back-to-login" style="display: block; margin-top: 15px; color: #2CF6F6; text-decoration: none;">بازگشت به ورود</a>
             </div>
         `;
 
         document.getElementById('auth-form-container').innerHTML = verifyHTML;
+
+        document.getElementById('verify-later-btn').addEventListener('click', async () => {
+            const { NotificationUtils } = await import('../utils/NotificationUtils.js');
+            NotificationUtils.show('می‌توانید وارد شوید. برای تایید از پروفایل اقدام کنید', 'success');
+            setTimeout(() => {
+                this.showLogin();
+                document.getElementById('login-username').value = username;
+            }, 1500);
+        });
 
         document.getElementById('verify-btn').addEventListener('click', async () => {
             const code = document.getElementById('verify-code').value.trim();

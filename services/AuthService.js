@@ -50,9 +50,14 @@ export class AuthService {
 
         await this.kvService.put(`user_${username}`, newUser);
         await this.addToPlayerList(username);
-        await this.sendTelegramVerification(username, verificationCode);
+        
+        const telegramSent = await this.sendTelegramVerification(username, verificationCode);
 
-        return { user: newUser, needsVerification: true };
+        return { 
+            user: newUser, 
+            needsVerification: true,
+            telegramSent: telegramSent
+        };
     }
 
     async sendTelegramVerification(username, code) {
@@ -91,12 +96,14 @@ export class AuthService {
             if (!response.ok) {
                 const errorData = await response.text();
                 console.error('Failed to send Telegram message:', errorData);
-                throw new Error('خطا در ارسال کد تایید به تلگرام');
+                return false;
             }
             
             console.log('✓ Verification code sent to Telegram successfully');
+            return true;
         } catch (error) {
             console.error('Telegram verification error:', error);
+            return false;
         }
     }
 
@@ -149,10 +156,7 @@ export class AuthService {
             throw new Error('نام کاربری یا رمز عبور اشتباه است');
         }
 
-        if (!user.verified) {
-            throw new Error('لطفا ابتدا حساب خود را تایید کنید');
-        }
-
+        // Allow login even without verification
         this.currentSession = username;
         this.saveSession(username);
         return user;
@@ -190,7 +194,7 @@ export class AuthService {
         if (!session) return null;
 
         const user = await this.kvService.get(`user_${session.username}`);
-        if (!user || !user.verified) {
+        if (!user) {
             this.clearSession();
             return null;
         }
