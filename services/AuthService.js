@@ -66,7 +66,7 @@ export class AuthService {
 
             const message = `🔐 کد تایید حساب کاربری\n\n` +
                           `کاربر: ${username}\n` +
-                          `کد تایید: ${code}\n\n` +
+                          `کد تایید: <code>${code}</code>\n\n` +
                           `برای تایید حساب، کد بالا را وارد کنید.`;
 
             const telegramData = {
@@ -89,8 +89,12 @@ export class AuthService {
             });
 
             if (!response.ok) {
-                console.error('Failed to send Telegram message');
+                const errorData = await response.text();
+                console.error('Failed to send Telegram message:', errorData);
+                throw new Error('خطا در ارسال کد تایید به تلگرام');
             }
+            
+            console.log('✓ Verification code sent to Telegram successfully');
         } catch (error) {
             console.error('Telegram verification error:', error);
         }

@@ -1,7 +1,7 @@
 
 export async function onRequest(context) {
     return new Response(JSON.stringify({
-        kvNamespace: context.env?.GAME_KV?.namespace || null,
+        kvNamespace: context.env?.GAME_DATA?.namespace || null,
         environment: context.env?.ENVIRONMENT || 'development'
     }), {
         headers: {

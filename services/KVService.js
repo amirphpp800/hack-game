@@ -11,6 +11,8 @@ export class KVService {
                 const config = await response.json();
                 this.kvNamespace = config.kvNamespace;
                 this.useKV = true;
+                this.useLocalStorage = false;
+                this.baseUrl = '/api/kv';
                 console.log('[✓] Connected to Cloudflare KV');
             } else {
                 console.warn('⚠️ Using localStorage (local development mode)');
