@@ -115,7 +115,7 @@ export class GamePage {
             'whoami': () => this.terminal.print(`<span style="color: #00FF76;">${this.gameState.username}</span>`),
             'pwd': () => this.terminal.print(`<span style="color: #2CF6F6;">/home/${this.gameState.username}</span>`),
             'date': () => this.terminal.print(new Date().toString()),
-            'uname': () => this.terminal.print('Linux cyberspace 6.1.0-kali7-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.0 x86_64 GNU/Linux'),
+            'uname': () => this.cmdUname(args),
             'ps': () => this.cmdPs(),
             'top': () => this.cmdTop(),
             'free': () => this.cmdFree(),
