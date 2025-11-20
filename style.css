@@ -842,6 +842,373 @@ body {
     transition: all 0.3s;
 }
 
+.profile-header-new {
+    display: flex;
+    gap: 30px;
+    background: linear-gradient(135deg, #1a1f2e 0%, #151a24 100%);
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #2CF6F6;
+    margin-bottom: 25px;
+}
+
+.profile-avatar-new {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar-icon-new {
+    font-size: 80px;
+    background: linear-gradient(135deg, #B537F2 0%, #2CF6F6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(181, 55, 242, 0.5));
+}
+
+.rank-badge {
+    background: linear-gradient(135deg, #FFCE3D 0%, #FF9F1C 100%);
+    color: #0B0E11;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.profile-info-new {
+    flex: 1;
+}
+
+.username-large {
+    font-size: 32px;
+    color: #2CF6F6;
+    margin: 0 0 20px 0;
+    text-shadow: 0 0 10px rgba(44, 246, 246, 0.5);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(181, 55, 242, 0.1);
+    border-radius: 5px;
+    border-left: 3px solid #B537F2;
+}
+
+.info-icon {
+    font-size: 20px;
+}
+
+.info-text {
+    color: #E4E6EB;
+    font-size: 14px;
+}
+
+.security-breakdown {
+    background: #0F1624;
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #384250;
+    margin-bottom: 25px;
+}
+
+.security-breakdown h3 {
+    color: #2CF6F6;
+    margin-bottom: 20px;
+}
+
+.security-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.security-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.security-bar.total {
+    border-top: 2px solid #384250;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.bar-label {
+    display: flex;
+    justify-content: space-between;
+    color: #E4E6EB;
+    font-size: 14px;
+}
+
+.bar-bg {
+    background: #151A24;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #B537F2 0%, #2CF6F6 100%);
+    transition: width 0.3s ease;
+}
+
+.profile-stats-new {
+    background: #0F1624;
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #384250;
+    margin-bottom: 25px;
+}
+
+.profile-stats-new h3 {
+    color: #2CF6F6;
+    margin-bottom: 20px;
+}
+
+.stats-grid-new {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #1a1f2e 0%, #151a24 100%);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card.success {
+    border-color: #45FF7A;
+}
+
+.stat-card.fail {
+    border-color: #FF5555;
+}
+
+.stat-card.rate {
+    border-color: #FFCE3D;
+}
+
+.stat-card.earned {
+    border-color: #2CF6F6;
+}
+
+.stat-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #E4E6EB;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #9EA5B3;
+}
+
+.profile-attacks-new {
+    background: #0F1624;
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #384250;
+}
+
+.profile-attacks-new h3 {
+    color: #2CF6F6;
+    margin-bottom: 20px;
+}
+
+.attacks-log-new {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.attack-log-card {
+    background: linear-gradient(135deg, #1a1f2e 0%, #151a24 100%);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #FF5555;
+}
+
+.log-header-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.log-attacker-new {
+    color: #FF5555;
+    font-weight: bold;
+}
+
+.vpn-badge-new {
+    background: #45FF7A;
+    color: #0B0E11;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.no-vpn-badge {
+    background: #FF5555;
+    color: #E4E6EB;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.log-body-new {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.log-ip-new {
+    color: #9EA5B3;
+    font-size: 13px;
+}
+
+.log-stolen-new {
+    color: #FFCE3D;
+    font-weight: bold;
+}
+
+.log-time-new {
+    color: #6C7A89;
+    font-size: 11px;
+}
+
+.player-card {
+    background: linear-gradient(135deg, #1a1f2e 0%, #151a24 100%);
+    border: 2px solid #384250;
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+.player-card:hover {
+    border-color: #2CF6F6;
+    box-shadow: 0 5px 20px rgba(44, 246, 246, 0.2);
+    transform: translateY(-3px);
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.player-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2CF6F6;
+}
+
+.player-rank {
+    background: linear-gradient(135deg, #B537F2 0%, #2CF6F6 100%);
+    color: #E4E6EB;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.player-ip {
+    color: #9EA5B3;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background: rgba(181, 55, 242, 0.1);
+    border-radius: 5px;
+}
+
+.stat-value {
+    color: #FFCE3D;
+    font-weight: bold;
+}
+
+.player-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.copy-ip-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #2CF6F6 0%, #009DFF 100%);
+    color: #0B0E11;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.copy-ip-btn:hover {
+    box-shadow: 0 0 15px rgba(44, 246, 246, 0.5);
+    transform: scale(1.05);
+}
+
+.attack-hint {
+    text-align: center;
+    color: #FFCE3D;
+    font-size: 12px;
+    padding: 8px;
+    background: rgba(255, 206, 61, 0.1);
+    border-radius: 5px;
+    border: 1px dashed #FFCE3D;
+}
+
+.terminal-loading {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
 .close-btn:hover {
     color: #FF2E63;
     text-shadow: 0 0 10px #FF2E63;

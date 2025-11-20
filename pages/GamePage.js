@@ -170,7 +170,11 @@ export class GamePage {
 
     applyPenalty() {
         const penalty = 0.0005;
-        this.gameState.balance = Math.max(0, this.gameState.balance - penalty);
+        if (this.gameState.balance >= penalty) {
+            this.gameState.balance -= penalty;
+        } else {
+            this.gameState.balance = 0;
+        }
         this.attackState.mistakes++;
         this.terminal.print(`<span class="error">❌ اشتباه! جریمه: ₿${penalty.toFixed(4)}</span>`);
         this.hud.updateBalance(this.gameState.balance);
@@ -383,7 +387,7 @@ export class GamePage {
 </body>
 </html>
 </span>`.trim()
-        }
+        };
 
         if (fileContents[args[0]]) {
             this.terminal.print(fileContents[args[0]]);
@@ -520,7 +524,6 @@ tmpfs            8192000      1024   8190976   1% /dev/shm
             return;
         }
 
-        // Check if IP is valid format
         const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
         if (!ipPattern.test(args[0])) {
             this.terminal.print('<span class="error">❌ Invalid IP address format!</span>');
@@ -532,10 +535,13 @@ tmpfs            8192000      1024   8190976   1% /dev/shm
         this.attackState.scanned = false;
         this.attackState.vulnerabilityChecked = false;
 
+        this.terminal.disableInput();
         this.terminal.print(`<span class="info">[*] Starting Nmap 7.93 scan...</span>`);
         this.terminal.print(`<span class="info">[*] Target: ${args[0]}</span>`);
+        this.terminal.showLoading();
 
         setTimeout(() => {
+            this.terminal.hideLoading();
             this.attackState.scanned = true;
             this.terminal.print(`<span class="success">[+] Scan complete for ${args[0]}</span>`);
             this.terminal.print(`<span style="color: #9EA5B3;">
@@ -547,9 +553,12 @@ PORT     STATE SERVICE
 8080/tcp open  http-proxy
             </span>`);
             this.terminal.print(`<span class="info">════════════════════════════════════════</span>`);
-            this.terminal.print(`<span style="color: #2CF6F6;">✓ مرحله 1 تکمیل شد!</span>`);
-            this.terminal.print(`<span style="color: #FFCE3D;">➜ دستور پیشنهادی بعدی:</span> <span class="success">nikto ${args[0]}</span>`);
+            this.terminal.print(`<span style="color: #2CF6F6;">✓ مرحله 1 کامل شد!</span>`);
+            this.terminal.print(`<span style="color: #FFCE3D;">دستورات بعدی:</span>`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• nikto ${args[0]}</span> - شناسایی آسیب‌پذیری`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• ping ${args[0]}</span> - تست اتصال`);
             this.terminal.print(`<span class="info">════════════════════════════════════════</span>`);
+            this.terminal.enableInput();
         }, 2000);
     }
 
@@ -866,11 +875,12 @@ msf6 > <span class="warning">Use 'explorer' tab for visual exploit interface</sp
             this.terminal.print('<span class="warning">[!] Vulnerability: SQL injection point found in /login.php</span>');
             this.terminal.print('<span class="warning">[!] Vulnerability: XSS vulnerability in /search.php</span>');
             this.terminal.print(`<span class="info">════════════════════════════════════════</span>`);
-            this.terminal.print(`<span style="color: #2CF6F6;">✓ مرحله 2 تکمیل شد!</span>`);
-            this.terminal.print(`<span style="color: #FFCE3D;">➜ دستورات پیشنهادی برای حمله نهایی:</span>`);
-            this.terminal.print(`<span class="success">  • exploit ${args[0]}</span> - حمله اکسپلویت`);
-            this.terminal.print(`<span class="success">  • sqlmap ${args[0]}</span> - حمله SQL Injection`);
-            this.terminal.print(`<span class="success">  • hydra ${args[0]}</span> - حمله Brute Force`);
+            this.terminal.print(`<span style="color: #2CF6F6;">✓ Step 2 Complete!</span>`);
+            this.terminal.print(`<span style="color: #FFCE3D;">Available commands:</span>`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• wireshark ${args[0]}</span>`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• attack ${args[0]}</span>`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• hydra ${args[0]}</span>`);
+            this.terminal.print(`  <span style="color: #9EA5B3;">• status</span>`);
             this.terminal.print(`<span class="info">════════════════════════════════════════</span>`);
         }, 2500);
     }
@@ -965,11 +975,30 @@ msf6 > <span class="warning">Use 'explorer' tab for visual exploit interface</sp
         }
 
         const targetIp = args[0];
+
+        if (!this.attackState.scanned || this.attackState.targetIP !== targetIp) {
+            this.terminal.print('<span class="error">❌ خطا! ابتدا باید با nmap اسکن کنید!</span>');
+            this.terminal.print(`<span style="color: #FFCE3D;">مراحل صحیح حمله:</span>`);
+            this.terminal.print(`<span class="success">1. nmap ${targetIp}</span> - اسکن پورت‌ها`);
+            this.terminal.print(`<span class="success">2. nikto ${targetIp}</span> - شناسایی آسیب‌پذیری`);
+            this.terminal.print(`<span class="success">3. attack ${targetIp}</span> - حمله نهایی`);
+            this.applyPenalty();
+            return;
+        }
+
+        if (!this.attackState.vulnerabilityChecked) {
+            this.terminal.print('<span class="error">❌ خطا! ابتدا باید با nikto آسیب‌پذیری‌ها را شناسایی کنید!</span>');
+            this.terminal.print(`<span style="color: #FFCE3D;">دستور بعدی: nikto ${targetIp}</span>`);
+            this.applyPenalty();
+            return;
+        }
+
         await this.loadAllPlayers();
         const target = this.allPlayers.find(p => p.ip === targetIp);
 
         if (!target) {
             this.terminal.print(`<span class="error">[X] Target ${targetIp} not found</span>`);
+            this.resetAttackState();
             return;
         }
 
@@ -977,6 +1006,7 @@ msf6 > <span class="warning">Use 'explorer' tab for visual exploit interface</sp
         this.terminal.print(`<span class="info">[*] Target: ${target.username}</span>`);
 
         await this.initiateAttack(target.username, target.ip);
+        this.resetAttackState();
     }
 
     cmdBalance() {
@@ -1042,10 +1072,9 @@ Security Level:     ${this.gameState.securityLevel}
                     <button class="filter-btn ${category === 'scripts' ? 'active' : ''}" data-category="scripts">Scripts</button>
                     <button class="filter-btn ${category === 'stealth' ? 'active' : ''}" data-category="stealth">Stealth</button>
                     <button class="filter-btn ${category === 'security' ? 'active' : ''}" data-category="security">Security</button>
-                    <button class="filter-btn ${category === 'cosmetics' ? 'active' : ''}" data-category="cosmetics">Cosmetics</button>
-                    <button class="filter-btn ${category === 'backdoor' ? 'active' : ''}" data-category="backdoor" style="background: #FF5555; color: #E4E6EB;">🔓 بک‌دور</button>
-                    <button class="filter-btn ${category === 'antibackdoor' ? 'active' : ''}" data-category="antibackdoor" style="background: #50FA7B; color: #0B0B0D;">🛡️ ضد بک‌دور</button>
-                    <button class="filter-btn ${category === 'autoattack' ? 'active' : ''}" data-category="autoattack" style="background: #FFCE3D; color: #0B0B0D;">⚡ Auto Attack</button>
+                    <button class="filter-btn ${category === 'autoattack' ? 'active' : ''}" data-category="autoattack" style="background: #FFCE3D; color: #0B0E11;">⚡ Auto Attack</button>
+                    <button class="filter-btn ${category === 'backdoor' ? 'active' : ''}" data-category="backdoor" style="background: #FF5555; color: #E4E6EB;">🔓 Backdoor</button>
+                    <button class="filter-btn ${category === 'antibackdoor' ? 'active' : ''}" data-category="antibackdoor" style="background: #50FA7B; color: #0B0E11;">🛡️ Anti-Backdoor</button>
                 </div>
 
                 <div id="store-items-grid"></div>
@@ -1147,69 +1176,130 @@ Security Level:     ${this.gameState.securityLevel}
             ? ((this.gameState.stats.wins / (this.gameState.stats.wins + this.gameState.stats.losses)) * 100).toFixed(1)
             : 0;
 
+        const totalDefense = this.gameState.security.firewall + this.gameState.security.encryption + this.gameState.security.stealth;
+
         const profileHTML = `
             <div class="tab-content">
-                <h2 class="tab-title">User Profile</h2>
+                <h2 class="tab-title">🔰 پروفایل کاربری</h2>
                 <div class="profile-section">
-                    <div class="profile-header">
-                        <div class="profile-avatar">
-                            <div class="avatar-icon">[USER]</div>
+                    <div class="profile-header-new">
+                        <div class="profile-avatar-new">
+                            <div class="avatar-icon-new">👤</div>
+                            <div class="rank-badge">${this.gameState.rank}</div>
                         </div>
-                        <div class="profile-info">
-                            <div class="info-row">
-                                <span class="info-label">Username:</span>
-                                <span>${this.gameState.username}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">IP Address:</span>
-                                <span>${this.gameState.ip}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">Rank:</span>
-                                <span>${this.gameState.rank}</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label">Security Level:</span>
-                                <span>${this.gameState.securityLevel}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-stats">
-                        <h3>Statistics</h3>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                                <span class="stat-label">Successful Attacks:</span>
-                                <span>${this.gameState.stats.wins}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Failed Attacks:</span>
-                                <span>${this.gameState.stats.losses}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Success Rate:</span>
-                                <span>${winRate}%</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Total Earned:</span>
-                                <span>₿${this.gameState.stats.totalEarned.toFixed(8)}</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-label">Total Stolen:</span>
-                                <span>₿${this.gameState.stats.totalStolen.toFixed(8)}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-achievements">
-                        <h3>Achievements</h3>
-                        <div id="achievements-grid">
-                            ${this.gameState.achievements.map(ach => `
-                                <div class="achievement ${ach.unlocked ? 'unlocked' : ''}">
-                                    <div class="achievement-icon">${ach.icon}</div>
-                                    <div class="achievement-name">${ach.name}</div>
+                        <div class="profile-info-new">
+                            <h2 class="username-large">${this.gameState.username}</h2>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-icon">🌐</span>
+                                    <span class="info-text">${this.gameState.ip}</span>
                                 </div>
-                            `).join('')}
+                                <div class="info-item">
+                                    <span class="info-icon">🛡️</span>
+                                    <span class="info-text">امنیت: ${this.gameState.securityLevel}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">💰</span>
+                                    <span class="info-text">₿${this.gameState.balance.toFixed(8)}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-icon">🔒</span>
+                                    <span class="info-text">قفل: ₿${this.gameState.lockedBalance.toFixed(8)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="security-breakdown">
+                        <h3>📊 تجزیه امنیت</h3>
+                        <div class="security-bars">
+                            <div class="security-bar">
+                                <div class="bar-label">
+                                    <span>🔥 فایروال</span>
+                                    <span>${this.gameState.security.firewall}</span>
+                                </div>
+                                <div class="bar-bg">
+                                    <div class="bar-fill" style="width: ${Math.min(100, this.gameState.security.firewall)}%"></div>
+                                </div>
+                            </div>
+                            <div class="security-bar">
+                                <div class="bar-label">
+                                    <span>🔐 رمزگذاری</span>
+                                    <span>${this.gameState.security.encryption}</span>
+                                </div>
+                                <div class="bar-bg">
+                                    <div class="bar-fill" style="width: ${Math.min(100, this.gameState.security.encryption)}%"></div>
+                                </div>
+                            </div>
+                            <div class="security-bar">
+                                <div class="bar-label">
+                                    <span>🥷 مخفی‌سازی</span>
+                                    <span>${this.gameState.security.stealth}</span>
+                                </div>
+                                <div class="bar-bg">
+                                    <div class="bar-fill" style="width: ${Math.min(100, this.gameState.security.stealth)}%"></div>
+                                </div>
+                            </div>
+                            <div class="security-bar total">
+                                <div class="bar-label">
+                                    <span>💪 مجموع</span>
+                                    <span>${totalDefense}</span>
+                                </div>
+                                <div class="bar-bg">
+                                    <div class="bar-fill" style="width: ${Math.min(100, totalDefense / 3)}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats-new">
+                        <h3>📈 آمار حملات</h3>
+                        <div class="stats-grid-new">
+                            <div class="stat-card success">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-value">${this.gameState.stats.wins}</div>
+                                <div class="stat-label">موفق</div>
+                            </div>
+                            <div class="stat-card fail">
+                                <div class="stat-icon">❌</div>
+                                <div class="stat-value">${this.gameState.stats.losses}</div>
+                                <div class="stat-label">ناموفق</div>
+                            </div>
+                            <div class="stat-card rate">
+                                <div class="stat-icon">📊</div>
+                                <div class="stat-value">${winRate}%</div>
+                                <div class="stat-label">نرخ موفقیت</div>
+                            </div>
+                            <div class="stat-card earned">
+                                <div class="stat-icon">💎</div>
+                                <div class="stat-value">₿${this.gameState.stats.totalStolen.toFixed(4)}</div>
+                                <div class="stat-label">کل سرقت</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-attacks-new">
+                        <h3>🎯 تاریخچه حملات دریافتی</h3>
+                        <div class="attacks-log-new">
+                            ${this.gameState.attackLogs && this.gameState.attackLogs.length > 0 
+                                ? this.gameState.attackLogs.map(log => {
+                                    const date = new Date(log.timestamp).toLocaleString('fa-IR');
+                                    return `
+                                        <div class="attack-log-card">
+                                            <div class="log-header-new">
+                                                <span class="log-attacker-new">👤 ${log.attacker}</span>
+                                                ${log.wasVPN ? '<span class="vpn-badge-new">🔒 VPN</span>' : '<span class="no-vpn-badge">🌐 Direct</span>'}
+                                            </div>
+                                            <div class="log-body-new">
+                                                <div class="log-ip-new">📍 ${log.attackerIP}</div>
+                                                <div class="log-stolen-new">💸 ₿${log.stolen.toFixed(8)}</div>
+                                            </div>
+                                            <div class="log-time-new">🕒 ${date}</div>
+                                        </div>
+                                    `;
+                                }).join('')
+                                : '<div class="inventory-empty">هنوز هیچ حمله‌ای ثبت نشده</div>'
+                            }
                         </div>
                     </div>
                 </div>
@@ -1244,8 +1334,7 @@ Security Level:     ${this.gameState.securityLevel}
 
         await this.loadAllPlayers();
 
-        const discovered = Math.min(5, this.allPlayers.length);
-        this.discoveredPlayers = this.allPlayers.sort(() => 0.5 - Math.random()).slice(0, discovered);
+        this.discoveredPlayers = [...this.allPlayers].filter(p => p.username !== this.gameState.username);
 
         setTimeout(() => {
             this.terminal.print(`<span class="success">[+] ${this.discoveredPlayers.length} players discovered!</span>`);
@@ -1284,16 +1373,25 @@ Security Level:     ${this.gameState.securityLevel}
 
         container.innerHTML = this.discoveredPlayers.map(player => `
             <div class="player-card">
-                <div class="player-ip">IP: ${player.ip}</div>
-                <div class="player-info">
-                    Username: ${player.username}<br>
-                    Security Level: ${player.securityLevel}<br>
-                    Balance: ₿${player.balance.toFixed(8)}
+                <div class="player-header">
+                    <div class="player-name">${player.username}</div>
+                    <div class="player-rank">${player.rank || 'مبتدی'}</div>
+                </div>
+                <div class="player-ip">🌐 ${player.ip}</div>
+                <div class="player-stats">
+                    <div class="stat-row">
+                        <span>🛡️ امنیت:</span>
+                        <span class="stat-value">${player.securityLevel}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>💰 موجودی:</span>
+                        <span class="stat-value">₿${player.balance.toFixed(8)}</span>
+                    </div>
                 </div>
                 <div class="player-actions">
-                    <button class="copy-ip-btn" data-ip="${player.ip}">Copy IP</button>
-                    <button class="attack-btn" data-target="${player.username}">Attack</button>
+                    <button class="copy-ip-btn" data-ip="${player.ip}">📋 Copy IP</button>
                 </div>
+                <div class="attack-hint">💡 برای حمله از ترمینال استفاده کنید</div>
             </div>
         `).join('');
 
@@ -1305,16 +1403,6 @@ Security Level:     ${this.gameState.securityLevel}
                 }).catch(() => {
                     NotificationUtils.show('[X] Failed to copy IP', 'error');
                 });
-            });
-        });
-
-        document.querySelectorAll('.attack-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const target = e.target.getAttribute('data-target');
-                const player = this.discoveredPlayers.find(p => p.username === target);
-                if (player) {
-                    this.initiateAttack(player.username, player.ip);
-                }
             });
         });
     }
@@ -1341,6 +1429,9 @@ Security Level:     ${this.gameState.securityLevel}
         const successChance = Math.max(10, Math.min(90, 50 + (myPower - targetDefense) * 2));
         const success = Math.random() * 100 < successChance;
 
+        const hasVPN = this.gameState.inventory.some(item => item.category === 'vpn' || item.category === 'stealth');
+        const attackerIP = hasVPN ? this.generateRandomIP() : this.gameState.ip;
+
         if (success) {
             const stolen = target.balance * (0.05 + Math.random() * 0.15);
 
@@ -1350,6 +1441,17 @@ Security Level:     ${this.gameState.securityLevel}
 
             if (!isNPC) {
                 target.balance = Math.max(0, target.balance - stolen);
+                
+                if (!target.attackLogs) target.attackLogs = [];
+                target.attackLogs.unshift({
+                    attacker: this.gameState.username,
+                    attackerIP: attackerIP,
+                    stolen: stolen,
+                    timestamp: Date.now(),
+                    wasVPN: hasVPN
+                });
+                target.attackLogs = target.attackLogs.slice(0, 10);
+                
                 await this.kvService.put(`user_${targetUsername}`, target);
             }
 
@@ -1358,6 +1460,9 @@ Security Level:     ${this.gameState.securityLevel}
             this.terminal.print(`<span class="success">╚═══════════════════════════════════════╝</span>`);
             this.terminal.print(`<span class="success">Stolen: ₿${stolen.toFixed(8)} BTC (LOCKED)</span>`);
             this.terminal.print(`<span class="warning">[!] Balance locked! Buy security items to unlock.</span>`);
+            if (hasVPN) {
+                this.terminal.print(`<span style="color: #2CF6F6;">[+] VPN Active - Your real IP is hidden!</span>`);
+            }
 
             NotificationUtils.show(`[+] Stole ₿${stolen.toFixed(8)}! (Locked)`, 'success');
         } else {
@@ -1399,6 +1504,10 @@ Security Level:     ${this.gameState.securityLevel}
         const overlay = document.getElementById('glitch-overlay');
         overlay.classList.add('active');
         setTimeout(() => overlay.classList.remove('active'), 300);
+    }
+
+    generateRandomIP() {
+        return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
     }
 
     updateRank() {

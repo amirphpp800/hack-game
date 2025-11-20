@@ -43,6 +43,48 @@ export class Terminal {
         document.getElementById('terminal-output').innerHTML = '';
     }
 
+    disableInput() {
+        const input = document.getElementById('terminal-input');
+        if (input) input.disabled = true;
+    }
+
+    enableInput() {
+        const input = document.getElementById('terminal-input');
+        if (input) {
+            input.disabled = false;
+            input.focus();
+        }
+    }
+
+    showLoading() {
+        const output = document.getElementById('terminal-output');
+        const loadingLine = document.createElement('div');
+        loadingLine.className = 'terminal-line terminal-loading';
+        loadingLine.id = 'terminal-loading-indicator';
+        loadingLine.innerHTML = '<span style="color: #2CF6F6;">[◐] در حال پردازش...</span>';
+        output.appendChild(loadingLine);
+        output.scrollTop = output.scrollHeight;
+
+        let frames = ['◐', '◓', '◑', '◒'];
+        let i = 0;
+        this.loadingInterval = setInterval(() => {
+            const loader = document.getElementById('terminal-loading-indicator');
+            if (loader) {
+                loader.innerHTML = `<span style="color: #2CF6F6;">[${frames[i]}] در حال پردازش...</span>`;
+                i = (i + 1) % frames.length;
+            }
+        }, 200);
+    }
+
+    hideLoading() {
+        if (this.loadingInterval) {
+            clearInterval(this.loadingInterval);
+            this.loadingInterval = null;
+        }
+        const loader = document.getElementById('terminal-loading-indicator');
+        if (loader) loader.remove();
+    }
+
     printWelcome(username, ip) {
         const welcome = `
 <span class="success">╔════════════════════════════════════════════════════════════════╗</span>
@@ -68,6 +110,11 @@ export class Terminal {
 
     attachEvents() {
         const input = document.getElementById('terminal-input');
+        const container = document.getElementById('terminal-container');
+        
+        container.addEventListener('click', () => {
+            input.focus();
+        });
         
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
